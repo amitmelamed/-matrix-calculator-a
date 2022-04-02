@@ -18,32 +18,14 @@ using namespace std;
 using namespace zich;
 
 int main() {
-  
-  std::vector<double> identity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-  std::vector<double> arr = {3, 0, 0, 0, 3, 0, 0, 0, 3};
-  Matrix a{identity, 3, 3};  // constructor taking a vector and a matrix size
-  cout << a << endl;
-  /* prints [1 0 0]
-            [0 1 0]
-            [0 0 1]*/
 
-  cout << (-a) << endl;
-  /* prints [-1 0 0]
-            [0 -1 0]
-            [0 0 -1]*/
-  cout << (3*a) << endl;
-  /* prints [-3 0 0]
-            [0 -3 0]
-            [0 0 -3]*/
+    vector<double> vectorA = {10, 20, 30, 40, 50, 60, 70, 80, 90,100,110,120};
+    vector<double> vectorB = {1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12};
+    Matrix A{vectorA, 3, 4};
+    Matrix B{vectorB, 3, 4};
+    cout<<B;
+    B=B*10;
 
-  Matrix b{arr, 3, 3};
-  a *= -3;
-  cout << (a+b) << endl;  // prints the 0 matrix
-  cout << (b-a) << endl;
-  /* prints [6 0 0]
-            [0 6 0]
-            [0 0 6]*/
-
-  cout << "End of demo!" << endl;
+    cout<<B;
   return 0;
 }
