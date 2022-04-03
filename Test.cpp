@@ -1,5 +1,5 @@
 //
-// Created by lucas on 02/04/2022.
+// Created by Amit Melamed on 02/04/2022.
 //
 #include "doctest.h"
 #include "Matrix.hpp"
@@ -125,6 +125,78 @@ TEST_CASE ("Equality between two matrix's") {
         //Now we will multy B by 10 and A==B
         B=B*10;
         CHECK_EQ(B==A, true);
+        A++;
+        ++B;
+        A+=3;
+        B=B+2;
+        B=B+1;
+        CHECK_EQ(B==A, true);
+        A*=10;
+        B=B*5;
+        B=B*2;
+        CHECK_EQ(B==A, true);
     }
+}
+/**
+ * In this test case we will check our calculation work.
+ * we will check adding,substructing and multiplication functions.
+ */
+TEST_CASE("Calculation work"){
+    vector<double> vectorA = {1, 2, 3, 4,
+                              5, 6, 7, 8,
+                              9,10,11,12};
+    vector<double> vectorB = {1, 2, 3,
+                              4, 5, 6,
+                              7, 8, 9,
+                              10,11,12};
+    //A*B==C
+    vector<double> vectorC = {70, 80, 90,
+                              158, 184, 210,
+                              246, 288, 330};
+    //B*A=D
+    vector<double > vectorD={38,44,50,56,
+                             83,98,113,128,
+                             128,152,176,200,
+                             173,206,239,272};
+    vector<double> vectorI_3={1,0,0,
+                              0,1,0,
+                              0,0,1};
+    vector<double> vectorI_4={1,0,0,0,
+                              0,1,0,0,
+                              0,0,1,0,
+                              0,0,0,1};
+    vector<double > vector_zero_3={0,0,0,
+                                   0,0,0,
+                                   0,0,0};
+    vector<double > vector_zero_4={0,0,0,0,
+                                   0,0,0,0,
+                                   0,0,0,0,
+                                   0,0,0,0};
+
+
+    Matrix A{vectorA, 3, 4};
+    Matrix B{vectorB, 4, 3};
+    Matrix C{vectorC,3,3};
+    Matrix D{vectorD,4,4};
+    Matrix I_3{vectorI_3,3,3};
+    Matrix I_4{vectorI_4,4,4};
+    Matrix zero_3{vector_zero_3,3,3};
+    Matrix zero_4{vector_zero_4,4,4};
+
+
+    CHECK_EQ((A*B)==C, true);
+    CHECK_EQ((B*A)==D, true);
+    //every matrix * the I matrix should be equal to itself.
+    CHECK_EQ((C*I_3)==C, true);
+    CHECK_EQ((D*I_4)==D, true);
+    //every matrix * the ZERO matrix is equal to zero matrix.
+    CHECK_EQ((C*zero_3)==zero_3, true);
+    CHECK_EQ((D*zero_4)==zero_4, true);
+    //every matrix + zero matrix equal to itself.
+    CHECK_EQ((C+zero_3)==C, true);
+    CHECK_EQ((D+zero_4)==D, true);
+    //every matrix - zero matrix equal to itself.
+    CHECK_EQ((C-zero_3)==C, true);
+    CHECK_EQ((D-zero_4)==D, true);
 }
 

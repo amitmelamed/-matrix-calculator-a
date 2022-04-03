@@ -30,6 +30,7 @@ namespace zich {
         int rows, cols;
     public:
         Matrix(const vector<double> &numbers, int n, int m);
+        Matrix(const vector<vector<double>> &numbers,int n,int m);
 
         double get(int i, int j);
 
@@ -43,6 +44,8 @@ namespace zich {
 
         void operator+=(Matrix const &B);
 
+        void operator+=(double scalar);
+
         Matrix operator+();
 
         Matrix operator-(double num);
@@ -53,6 +56,8 @@ namespace zich {
         Matrix operator-(Matrix const &B);
 
         void operator-=(Matrix const &B);
+
+        void operator-=(double scalar);
 
         Matrix operator-();
 

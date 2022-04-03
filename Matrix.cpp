@@ -28,13 +28,41 @@ namespace zich {
         this->cols = m;
         vector<double> row;
         for (int i = 0; i < this->rows; ++i) {
-            row.resize(0);
+            row.clear();
             for (int j = 0; j < this->cols; ++j) {
-                row.push_back(numbers[(unsigned long) i * (unsigned long) this->rows + (unsigned long)j]);
+                row.push_back(numbers[(unsigned long) i * (unsigned long) this->cols + (unsigned long)j]);
             }
             this->matrix.push_back(row);
         }
     }
+    /**
+     * Constructor that gets Matrix instead of array.
+     * @param numbers -matrix
+     * @param n -row size
+     * @param m -col size
+     */
+    Matrix::Matrix(const vector<vector<double>> &numbers,int n,int m){
+        if (n <= 0 || m <= 0) {
+            throw std::invalid_argument("n or m must be at least 1 or bigger");
+        }
+        if(numbers.size()==0){
+            throw std::invalid_argument("array must be n*m");
+        }
+        if(numbers.size()!=n||numbers[0].size()!=m){
+            throw std::invalid_argument("array must be n*m");
+        }
+        this->rows = n;
+        this->cols = m;
+        vector<double> row;
+        for (int i = 0; i < this->rows; ++i) {
+            row.clear();
+            for (int j = 0; j < this->cols; ++j) {
+                row.push_back(numbers[(unsigned long )i][(unsigned long)j]);
+            }
+            this->matrix.push_back(row);
+        }
+    }
+
 
     /**
      * get the matrix[i][j] data
@@ -197,6 +225,17 @@ namespace zich {
             }
         }
     }
+    /**
+     * add scalar to every part of matrix
+     * @param scalar
+     */
+    void Matrix::operator+=(double scalar) {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                this->matrix[(unsigned long) i][(unsigned long) j] += scalar;
+            }
+        }
+    }
 
     /**
      * subscructing matrix B from current.
@@ -210,6 +249,17 @@ namespace zich {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j] -= B.matrix[(unsigned long) i][(unsigned long) j];
+            }
+        }
+    }
+    /**
+     * substruct scalar to every part of matrix
+     * @param scalar
+     */
+    void Matrix::operator-=(double scalar) {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                this->matrix[(unsigned long) i][(unsigned long) j] -= scalar;
             }
         }
     }
@@ -238,13 +288,31 @@ namespace zich {
      */
     Matrix Matrix::operator*(Matrix const &B) {
 
-        if (cols != B.rows) {
+        if (cols != B.rows||B.cols==0) {
             throw std::invalid_argument("matrix sizes dont match");
         }
-        vector<double> nums = {1, 2, 3};
-        Matrix m{nums, 1, 3};
+        //initialize new matrix
+        vector<vector<double>> newMat;
+        vector<double> row;
+        for (int i = 0; i < rows; ++i) {
+            row.clear();
+            for (int j = 0; j < B.cols; ++j) {
+                row.push_back(0);
+            }
+            newMat.push_back(row);
+        }
+        for(unsigned long i = 0; i < rows; ++i) {
+            for (unsigned long j = 0; j < B.cols; ++j) {
+                for (unsigned long k = 0; k < cols; ++k) {
+                    newMat[i][j] += get(i,k) * B.matrix[k][j];
+                }
+            }
+        }
+        Matrix m{newMat,rows,B.cols};
         return m;
     }
+
+
 
     /**
      * multiplication our current matrix by scalar.
@@ -270,9 +338,39 @@ namespace zich {
      * @return
      */
     void Matrix::operator *=(Matrix const &B) {
-        if (cols != B.rows) {
+
+        if (cols != B.rows||B.cols==0) {
             throw std::invalid_argument("matrix sizes dont match");
         }
+        //initialize new matrix
+        vector<vector<double>> newMat;
+        vector<double> row;
+        for (int i = 0; i < rows; ++i) {
+            row.clear();
+            for (int j = 0; j < B.cols; ++j) {
+                row.push_back(0);
+            }
+            newMat.push_back(row);
+        }
+        for(unsigned long i = 0; i < rows; ++i) {
+            for (unsigned long j = 0; j < B.cols; ++j) {
+                for (unsigned long k = 0; k < cols; ++k) {
+                    newMat[i][j] += get(i,k) * B.matrix[k][j];
+                }
+            }
+        }
+        this->matrix.clear();
+        vector<double > new_row;
+        for (unsigned long i = 0; i < newMat.size(); ++i) {
+            new_row.clear();
+            for (unsigned long j = 0; j < newMat[0].size(); ++j) {
+                new_row.push_back(newMat[i][j]);
+            }
+            this->matrix.push_back(new_row);
+        }
+        this->rows= newMat.size();
+        this->cols=newMat[0].size();
+
     }
 
     /**
@@ -340,7 +438,13 @@ namespace zich {
         for (int i = 0; i < m.rows; ++i) {
             o << "[";
             for (int j = 0; j < m.cols; ++j) {
-                o << m.matrix[(unsigned long) i][(unsigned long) j] << ",";
+                if(j!=m.cols-1){
+                    o << m.matrix[(unsigned long) i][(unsigned long) j] << ",";
+
+                } else{
+                    o << m.matrix[(unsigned long) i][(unsigned long) j];
+                }
+
             }
             o << "]\n";
         }
@@ -353,7 +457,7 @@ namespace zich {
      */
     bool Matrix::operator==(Matrix &B) {
         if(B.rows!=rows||B.cols!=cols){
-            return false;
+            throw std::invalid_argument("matrix sizes dont match");
         }
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
@@ -371,7 +475,7 @@ namespace zich {
      */
     bool Matrix::operator!=(Matrix &B) {
         if(B.rows!=rows||B.cols!=cols){
-            return true;
+            throw std::invalid_argument("matrix sizes dont match");
         }
         for (int i = 0; i <rows ; ++i) {
             for (int j = 0; j < cols; ++j) {
@@ -383,16 +487,60 @@ namespace zich {
         return false;
     }
     bool Matrix::operator<( Matrix &B) {
-        return false;
+        if(rows!=B.rows||cols!=B.cols){
+            throw std::invalid_argument("matrix sizes dont match");
+        }
+        double A_sum=0;
+        double B_sum=0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                A_sum+= get(i,j);
+                B_sum+=B.get(i,j);
+            }
+        }
+        return A_sum<B_sum;
     }
     bool Matrix::operator>( Matrix &B) {
-        return false;
+        if(rows!=B.rows||cols!=B.cols){
+            throw std::invalid_argument("matrix sizes dont match");
+        }
+        double A_sum=0;
+        double B_sum=0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                A_sum+= get(i,j);
+                B_sum+=B.get(i,j);
+            }
+        }
+        return A_sum>B_sum;
     }
     bool Matrix::operator<=( Matrix &B) {
-        return false;
+        if(rows!=B.rows||cols!=B.cols){
+            throw std::invalid_argument("matrix sizes dont match");
+        }
+        double A_sum=0;
+        double B_sum=0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                A_sum+= get(i,j);
+                B_sum+=B.get(i,j);
+            }
+        }
+        return A_sum<=B_sum;
     }
     bool Matrix::operator>=( Matrix &B) {
-        return false;
+        if(rows!=B.rows||cols!=B.cols){
+            throw std::invalid_argument("matrix sizes dont match");
+        }
+        double A_sum=0;
+        double B_sum=0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                A_sum+= get(i,j);
+                B_sum+=B.get(i,j);
+            }
+        }
+        return A_sum>=B_sum;
     }
 }
 
