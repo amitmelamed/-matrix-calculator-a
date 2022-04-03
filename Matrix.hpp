@@ -37,18 +37,15 @@ namespace zich {
         //basic calculation operators:
         Matrix operator+(Matrix const &B);
 
-        Matrix operator+(double num);
 
         //3+mat
         friend Matrix operator+(double const &scalar, Matrix other);
 
         void operator+=(Matrix const &B);
 
-        void operator+=(double scalar);
 
         Matrix operator+();
 
-        Matrix operator-(double num);
 
         //3-mat
         friend Matrix operator-(double const &scalar, Matrix other);
@@ -57,7 +54,6 @@ namespace zich {
 
         void operator-=(Matrix const &B);
 
-        void operator-=(double scalar);
 
         Matrix operator-();
 

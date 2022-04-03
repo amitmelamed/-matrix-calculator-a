@@ -109,38 +109,8 @@ namespace zich {
         return mat;
     }
 
-    /**
-     * add matrix with double
-     * @param num
-     * @return
-     */
-    Matrix Matrix::operator+(double num) {
-        vector<double> vec;
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                vec.push_back(this->get(i, j) + num);
-            }
-        }
-        Matrix mat{vec, rows, cols};
-        return mat;
-    }
 
-    /**
-     * add matrix with double
-     * when calling scalar+Matrix
-     * @param num
-     * @return
-     */
-    Matrix operator+(double const &scalar, Matrix other) {
-        vector<double> vec;
-        for (int i = 0; i < other.rows; ++i) {
-            for (int j = 0; j < other.cols; ++j) {
-                vec.push_back(other.get(i, j) + scalar);
-            }
-        }
-        Matrix mat{vec, other.rows, other.cols};
-        return mat;
-    }
+
 
     /**
      * substituting matrix B from current matrix.
@@ -161,22 +131,6 @@ namespace zich {
         return sumMatrix;
     }
 
-    /**
-     * substructing scalar-Matrix
-     * @param scalar
-     * @param other
-     * @return
-     */
-    Matrix operator-(double const &scalar, Matrix other) {
-        vector<double> vec;
-        for (int i = 0; i < other.rows; ++i) {
-            for (int j = 0; j < other.cols; ++j) {
-                vec.push_back(other.get(i, j) - scalar);
-            }
-        }
-        Matrix mat{vec, other.rows, other.cols};
-        return mat;
-    }
 
     /**
      * Substructing 'ONRY'
@@ -194,21 +148,6 @@ namespace zich {
         return mat;
     }
 
-    /**
-     * sub matrix with double
-     * @param num
-     * @return
-     */
-    Matrix Matrix::operator-(double num) {
-        vector<double> vec;
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                vec.push_back(this->get(i, j) - num);
-            }
-        }
-        Matrix mat{vec, rows, cols};
-        return mat;
-    }
 
     /**
      * adding matrix B to current.
@@ -225,17 +164,6 @@ namespace zich {
             }
         }
     }
-    /**
-     * add scalar to every part of matrix
-     * @param scalar
-     */
-    void Matrix::operator+=(double scalar) {
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                this->matrix[(unsigned long) i][(unsigned long) j] += scalar;
-            }
-        }
-    }
 
     /**
      * subscructing matrix B from current.
@@ -249,17 +177,6 @@ namespace zich {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j] -= B.matrix[(unsigned long) i][(unsigned long) j];
-            }
-        }
-    }
-    /**
-     * substruct scalar to every part of matrix
-     * @param scalar
-     */
-    void Matrix::operator-=(double scalar) {
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                this->matrix[(unsigned long) i][(unsigned long) j] -= scalar;
             }
         }
     }

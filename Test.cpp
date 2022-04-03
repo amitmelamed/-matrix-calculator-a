@@ -127,9 +127,6 @@ TEST_CASE ("Equality between two matrix's") {
         CHECK_EQ(B==A, true);
         A++;
         ++B;
-        A+=3;
-        B=B+2;
-        B=B+1;
         CHECK_EQ(B==A, true);
         A*=10;
         B=B*5;
@@ -172,6 +169,13 @@ TEST_CASE("Calculation work"){
                                    0,0,0,0,
                                    0,0,0,0,
                                    0,0,0,0};
+    vector<double> vector_one_3={1,1,1,
+                                 1,1,1,
+                                 1,1,1};
+    vector<double> vector_one_4={1,1,1,1,
+                                 1,1,1,1,
+                                 1,1,1,1,
+                                 1,1,1,1};
 
 
     Matrix A{vectorA, 3, 4};
@@ -182,6 +186,10 @@ TEST_CASE("Calculation work"){
     Matrix I_4{vectorI_4,4,4};
     Matrix zero_3{vector_zero_3,3,3};
     Matrix zero_4{vector_zero_4,4,4};
+    Matrix oneMatrix_3{vector_one_3,3,3};
+    Matrix oneMatrix_4{vector_one_4,4,4};
+
+
 
 
     CHECK_EQ((A*B)==C, true);
@@ -198,5 +206,18 @@ TEST_CASE("Calculation work"){
     //every matrix - zero matrix equal to itself.
     CHECK_EQ((C-zero_3)==C, true);
     CHECK_EQ((D-zero_4)==D, true);
+    CHECK_EQ((D-D)==zero_4, true);
+    CHECK_EQ((C-C)==zero_3, true);
+    //zero matrix ++ should be equal to one matrix
+    zero_3++;
+    ++zero_4;
+    CHECK_EQ(zero_3==oneMatrix_3,true);
+    CHECK_EQ(zero_4==oneMatrix_4,true);
+
+
+
 }
+
+
+
 
