@@ -213,9 +213,85 @@ TEST_CASE("Calculation work"){
     ++zero_4;
     CHECK_EQ(zero_3==oneMatrix_3,true);
     CHECK_EQ(zero_4==oneMatrix_4,true);
+}
+/**
+ * matrix size should be m*n integers:
+ * m>0,n>0.
+ * numbers array size should be n*m.
+ */
+TEST_CASE("Bad input in Constructor"){
+    vector<double> arr={1,2,3,4,5,6,7,8,9,10,11,12};
+    CHECK_NOTHROW(Matrix m(arr,3,4));
+    CHECK_NOTHROW(Matrix m(arr,4,3));
+    CHECK_NOTHROW(Matrix m(arr,2,6));
+    CHECK_NOTHROW(Matrix m(arr,6,2));
+    CHECK_NOTHROW(Matrix m(arr,1,12));
+    CHECK_NOTHROW(Matrix m(arr,12,1));
+    //m and n positive integers,but m*n!=arr.size
+    CHECK_THROWS(Matrix m(arr,10,10));
+    CHECK_THROWS(Matrix m(arr,3,3));
+    CHECK_THROWS(Matrix m(arr,4,4));
+    CHECK_THROWS(Matrix m(arr,4,10));
+    CHECK_THROWS(Matrix m(arr,10,3));
+    //m*n==arr.size but m and n negative
+    CHECK_THROWS(Matrix m(arr,-3,-4));
+    CHECK_THROWS(Matrix m(arr,-4,-3));
+    CHECK_THROWS(Matrix m(arr,-2,-6));
+    CHECK_THROWS(Matrix m(arr,-6,-2));
+    CHECK_THROWS(Matrix m(arr,-1,-12));
+    CHECK_THROWS(Matrix m(arr,-12,-1));
+    //negative numbers and zero
+    CHECK_THROWS(Matrix m(arr,-4,3));
+    CHECK_THROWS(Matrix m(arr,4,-3));
+    CHECK_THROWS(Matrix m(arr,0,-3));
+    CHECK_THROWS(Matrix m(arr,-3,0));
+    CHECK_THROWS(Matrix m(arr,0,0));
+    CHECK_THROWS(Matrix m(arr,0,3));
+    CHECK_THROWS(Matrix m(arr,3,0));
+}
+TEST_CASE("bad input in functions"){
+    vector<double> arr={1,2,3,4,5,6,7,8,9,10,11,12};
+    Matrix A(arr,4,3);
+    Matrix B(arr,2,6);
+    CHECK_THROWS(A*B);
+    CHECK_THROWS(B*A);
+    CHECK_THROWS(A+B);
+    CHECK_THROWS(A-B);
+    CHECK_THROWS(B-A);
+    CHECK_THROWS(B+A);
+    Matrix C(arr,3,4);
+    CHECK_NOTHROW(A*C);
+    CHECK_NOTHROW(C*A);
+    CHECK_THROWS(A+C);
+    CHECK_THROWS(A-C);
+    CHECK_THROWS(C-A);
+    CHECK_THROWS(C+A);
+    CHECK_THROWS(A*=B);
+    CHECK_THROWS(B*=A);
+    CHECK_THROWS(A+=B);
+    CHECK_THROWS(A-=B);
+    CHECK_THROWS(B-=A);
+    CHECK_THROWS(B+=A);
+    CHECK_NOTHROW(A*=C);
+    CHECK_NOTHROW(C*=A);
+    CHECK_THROWS(A+=C);
+    CHECK_THROWS(A-=C);
+    CHECK_THROWS(C-=A);
+    CHECK_THROWS(C+=A);
+}
+TEST_CASE("Prefix and Postfix"){
+    Matrix A({1,2,3,4,5,6},2,3);
+    Matrix B({2,3,4,5,6,7},2,3);
+    Matrix C({3,4,5,6,7,8},2,3);
+    Matrix D({1,2,3,4,5,6},2,3);
 
-
-
+    A++;
+    CHECK_EQ(A==B, true);
+    ++A;
+    CHECK_EQ(A==C, true);
+    A--;
+    --A;
+    CHECK_EQ(A==D, true);
 }
 
 

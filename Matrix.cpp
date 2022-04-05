@@ -45,7 +45,7 @@ namespace zich {
         if (n <= 0 || m <= 0) {
             throw std::invalid_argument("n or m must be at least 1 or bigger");
         }
-        if(numbers.size()==0){
+        if(numbers.empty()){
             throw std::invalid_argument("array must be n*m");
         }
         if(numbers.size()!=n||numbers[0].size()!=m){
@@ -218,9 +218,9 @@ namespace zich {
             }
             newMat.push_back(row);
         }
-        for(unsigned long i = 0; i < rows; ++i) {
-            for (unsigned long j = 0; j < B.cols; ++j) {
-                for (unsigned long k = 0; k < cols; ++k) {
+        for(size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < B.cols; ++j) {
+                for (size_t k = 0; k < cols; ++k) {
                     newMat[i][j] += get(i,k) * B.matrix[k][j];
                 }
             }
@@ -269,9 +269,9 @@ namespace zich {
             }
             newMat.push_back(row);
         }
-        for(unsigned long i = 0; i < rows; ++i) {
-            for (unsigned long j = 0; j < B.cols; ++j) {
-                for (unsigned long k = 0; k < cols; ++k) {
+        for(size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < B.cols; ++j) {
+                for (size_t k = 0; k < cols; ++k) {
                     newMat[i][j] += get(i,k) * B.matrix[k][j];
                 }
             }
