@@ -364,7 +364,6 @@ namespace zich {
      * @return
      */
     std::ostream &operator<<(std::ostream &o, Matrix const &m) {
-
         for (int i = 0; i < m.rows; ++i) {
             o << "[";
             for (int j = 0; j < m.cols; ++j) {

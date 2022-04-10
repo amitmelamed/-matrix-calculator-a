@@ -126,8 +126,7 @@ TEST_CASE ("Equality between two matrix's") {
         //Now we will multy B by 10 and A==B
         B=B*10;
         CHECK_EQ(B==A, true);
-        A++;
-        ++B;
+
         CHECK_EQ(B==A, true);
         A*=10;
         B=B*5;
