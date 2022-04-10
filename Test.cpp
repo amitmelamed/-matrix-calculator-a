@@ -1,8 +1,8 @@
 //
 // Created by Amit Melamed on 02/04/2022.
 //
-#include "../doctest.h"
-#include "../Matrix.hpp"
+#include "doctest.h"
+#include "Matrix.hpp"
 
 using namespace std;
 using namespace zich;
