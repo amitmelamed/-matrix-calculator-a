@@ -90,7 +90,7 @@ namespace zich {
 
         bool operator>=(Matrix  &B);
 
-        bool operator==(Matrix  &B);
+        friend bool operator==(const Matrix &A,const Matrix  &B);
 
         bool operator!=(Matrix  &B);
 

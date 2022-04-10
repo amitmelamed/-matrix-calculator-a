@@ -21,7 +21,7 @@ namespace zich {
             throw std::invalid_argument("n or m must be at least 1 or bigger");
         }
         if (numbers.size() != n * m) {
-            throw std::invalid_argument("array must be n*m");
+            throw std::invalid_argument("array must be n*m-24");
         }
 
         this->rows = n;
@@ -46,10 +46,10 @@ namespace zich {
             throw std::invalid_argument("n or m must be at least 1 or bigger");
         }
         if(numbers.empty()){
-            throw std::invalid_argument("array must be n*m");
+            throw std::invalid_argument("array must be n*m-49");
         }
-        if(numbers.size()!=n||numbers[0].size()!=m){
-            throw std::invalid_argument("array must be n*m");
+        if(numbers.size()*numbers[0].size()!=m*n){
+            throw std::invalid_argument("array must be n*m-52");
         }
         this->rows = n;
         this->cols = m;
@@ -364,11 +364,12 @@ namespace zich {
      * @return
      */
     std::ostream &operator<<(std::ostream &o, Matrix const &m) {
+
         for (int i = 0; i < m.rows; ++i) {
             o << "[";
             for (int j = 0; j < m.cols; ++j) {
                 if(j!=m.cols-1){
-                    o << m.matrix[(unsigned long) i][(unsigned long) j] << ",";
+                    o << m.matrix[(unsigned long) i][(unsigned long) j] << " ";
 
                 } else{
                     o << m.matrix[(unsigned long) i][(unsigned long) j];
@@ -384,13 +385,13 @@ namespace zich {
      * @param B
      * @return
      */
-    bool Matrix::operator==(Matrix &B) {
-        if(B.rows!=rows||B.cols!=cols){
+    bool operator==(const Matrix &A,const Matrix &B) {
+        if(B.rows!=A.rows||B.cols!=A.cols){
             throw std::invalid_argument("matrix sizes dont match");
         }
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if(get(i,j)!=B.get(i,j)){
+        for (size_t i = 0; i < A.rows; ++i) {
+            for (size_t j = 0; j < A.cols; ++j) {
+                if(A.matrix[i][j]!=B.matrix[i][j]){
                     return false;
                 }
             }
