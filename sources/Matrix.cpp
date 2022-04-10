@@ -1,7 +1,7 @@
 //
 // Created by lucas on 01/04/2022.
 //
-#include "Matrix.hpp"
+#include "../Matrix.hpp"
 #include <iostream>
 #include <vector>
 
@@ -154,7 +154,7 @@ namespace zich {
      * @param B
      * @return
      */
-    void Matrix::operator+=(Matrix const &B) {
+    Matrix Matrix::operator+=(Matrix const &B) {
         if (B.rows != this->rows || B.cols != this->cols) {
             throw std::invalid_argument("matrix sizes dont match");
         }
@@ -163,6 +163,8 @@ namespace zich {
                 this->matrix[(unsigned long) i][(unsigned long) j] += B.matrix[(unsigned long) i][(unsigned long) j];
             }
         }
+        Matrix matrix1{this->matrix,cols,rows};
+        return matrix1;
     }
 
     /**
@@ -170,7 +172,7 @@ namespace zich {
      * @param B
      * @return
      */
-    void Matrix::operator-=(Matrix const &B) {
+    Matrix Matrix::operator-=(Matrix const &B) {
         if (B.rows != this->rows || B.cols != this->cols) {
             throw std::invalid_argument("matrix sizes dont match");
         }
@@ -179,6 +181,8 @@ namespace zich {
                 this->matrix[(unsigned long) i][(unsigned long) j] -= B.matrix[(unsigned long) i][(unsigned long) j];
             }
         }
+        Matrix matrix1{this->matrix,cols,rows};
+        return matrix1;
     }
 
     /**
@@ -307,42 +311,50 @@ namespace zich {
      */
 
     // Overload ++ when used as prefix
-    void Matrix::operator++() {
+    Matrix Matrix::operator++() {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j]++;
             }
         }
+        Matrix matrix1{this->matrix,cols,rows};
+        return matrix1;
     }
     /**
      * Decrease all matrix cells by 1.
      * @return
      */
     // Overload -- when used as prefix
-    void Matrix::operator--() {
+    Matrix Matrix::operator--() {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j]--;
             }
         }
+        Matrix matrix1{this->matrix,cols,rows};
+        return matrix1;
     }
 
     // Overload ++ when used as postfix
-    void Matrix::operator++(int) {
+    Matrix Matrix::operator++(int) {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j]++;
             }
         }
+        Matrix matrix1{this->matrix,cols,rows};
+        return matrix1;
     }
 
     // Overload -- when used as postfix
-    void Matrix::operator--(int) {
+    Matrix Matrix::operator--(int) {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j]--;
             }
         }
+        Matrix matrix1{this->matrix,cols,rows};
+        return matrix1;
     }
 
     /**

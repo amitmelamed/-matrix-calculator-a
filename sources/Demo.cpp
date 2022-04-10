@@ -14,7 +14,7 @@
 #include <stdexcept>
 using namespace std;
 
-#include "Matrix.hpp"
+#include "../Matrix.hpp"
 using namespace zich;
 
 int main() {

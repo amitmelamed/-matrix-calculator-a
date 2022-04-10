@@ -41,7 +41,7 @@ namespace zich {
         //3+mat
         friend Matrix operator+(double const &scalar, Matrix other);
 
-        void operator+=(Matrix const &B);
+        Matrix operator+=(Matrix const &B);
 
 
         Matrix operator+();
@@ -52,7 +52,7 @@ namespace zich {
 
         Matrix operator-(Matrix const &B);
 
-        void operator-=(Matrix const &B);
+        Matrix operator-=(Matrix const &B);
 
 
         Matrix operator-();
@@ -72,14 +72,14 @@ namespace zich {
 
         //increment and decrement operators
         //++prefix
-        void operator++();
+        Matrix operator++();
 
-        void operator--();
+        Matrix operator--();
 
         //postfix++
-        void operator++(int);
+        Matrix operator++(int);
 
-        void operator--(int);
+        Matrix operator--(int);
 
         //Comparison operators:
         bool operator<(Matrix  &B);
