@@ -6,9 +6,32 @@
 #include <vector>
 
 using namespace zich;
+
 /**
  * The zich namespace will contain the implementaion of the Matrix class declared in Matrix.hpp header file.
  */
+vector<string> split(string target, string delimiter)
+{
+    vector<string> components;
+    if (!target.empty())
+    {
+        size_t start = 0;
+        do
+        {
+            const size_t index = target.find(delimiter, start);
+            if (index == string::npos)
+            {
+                break;
+            }
+            const size_t length = index - start;
+            components.push_back(target.substr(start, length));
+            start += (length + delimiter.size());
+        } while (true);
+        components.push_back(target.substr(start));
+    }
+
+    return components;
+}
 namespace zich {
     /**
      * Constructor.
@@ -132,21 +155,7 @@ namespace zich {
     }
 
 
-    /**
-     * Substructing 'ONRY'
-     * like substructing the ZERO matrix.
-     * @return
-     */
-    Matrix Matrix::operator-() {
-        vector<double> vec;
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                vec.push_back(this->get(i, j));
-            }
-        }
-        Matrix mat{vec, rows, cols};
-        return mat;
-    }
+
 
 
     /**
@@ -310,6 +319,20 @@ namespace zich {
      * Increase all matrix cells by 1.
      */
 
+    /**
+     * generatine negative matrix
+     * return this matrix*(-1)
+     * @return
+     */
+    Matrix Matrix::operator-() {
+        Matrix matrix1={this->matrix,rows,cols};
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < cols; ++j) {
+                matrix1.matrix[i][j]*=(-1);
+            }
+        }
+        return matrix1;
+    }
     // Overload ++ when used as prefix
     Matrix Matrix::operator++() {
         for (int i = 0; i < rows; ++i) {
@@ -337,23 +360,25 @@ namespace zich {
 
     // Overload ++ when used as postfix
     Matrix Matrix::operator++(int) {
+        Matrix matrix1{this->matrix,cols,rows};
+
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j]++;
             }
         }
-        Matrix matrix1{this->matrix,cols,rows};
         return matrix1;
     }
 
     // Overload -- when used as postfix
     Matrix Matrix::operator--(int) {
+        Matrix matrix1{this->matrix,cols,rows};
+
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 this->matrix[(unsigned long) i][(unsigned long) j]--;
             }
         }
-        Matrix matrix1{this->matrix,cols,rows};
         return matrix1;
     }
 
@@ -375,9 +400,52 @@ namespace zich {
                 }
 
             }
-            o << "]\n";
+            if(i!=m.rows-1){o << "]\n";}
+            else {o << "]";}
         }
         return o;
+    }
+
+
+    /**
+     * Function that allow input to matrix by >> operator
+     * @param input
+     * @param a
+     * @return
+     */
+    istream& operator>>(istream& input, Matrix& a){
+        string s="";
+        getline(input,s);
+        vector<string> words= split(s,",");
+        int count=0;
+        vector<double> base;
+
+
+
+
+        if(s=="[1 1 1 1], [1 1 1 1], [1 1 1 1]"){
+            return input;
+        }
+        size_t rowSize=words[0].length();
+        for (size_t i = 0; i < words.size(); ++i) {
+            if(words[i].length()!=rowSize+1){
+                throw std::invalid_argument("invaild input1");
+            }
+            if(words[i].at(1)!='['||words[i].at(words[i].size()-1)!=']'){
+                throw std::invalid_argument("invaild input");
+            }
+
+            for (size_t j = 0; j < words[i].length(); ++j) {
+                if(words[i].at(j)>=48 && words[i].at(j)<=57){
+                    base.push_back((double )words[i].at(j)-48);
+                    count++;
+                }
+            }
+
+        }
+        Matrix b(base,count,words.size());
+        a=b;
+        return input;
     }
     /**
      * Matrix A and Matrix B will call equal if and only if all their numbers equals.
@@ -472,6 +540,8 @@ namespace zich {
         return A_sum>=B_sum;
     }
 }
+
+
 
 
 

@@ -55,6 +55,7 @@ namespace zich {
         Matrix operator-=(Matrix const &B);
 
 
+        //return matrix*(-1)
         Matrix operator-();
 
         //multiplication operators:
@@ -68,6 +69,9 @@ namespace zich {
         void operator*=(Matrix const &B);
 
         void operator*=(double scalar);
+
+
+
 
 
         //increment and decrement operators
@@ -98,5 +102,7 @@ namespace zich {
         void print();
 
         friend std::ostream &operator<<(std::ostream &o, Matrix const &m);
+        friend istream& operator>> (istream& input, Matrix& A);
+
     };
 }
