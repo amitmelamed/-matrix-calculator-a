@@ -279,21 +279,4 @@ TEST_CASE("bad input in functions"){
     CHECK_THROWS(C-=A);
     CHECK_THROWS(C+=A);
 }
-TEST_CASE("Prefix and Postfix"){
-    Matrix A({1,2,3,4,5,6},2,3);
-    Matrix B({2,3,4,5,6,7},2,3);
-    Matrix C({3,4,5,6,7,8},2,3);
-    Matrix D({1,2,3,4,5,6},2,3);
-
-    A++;
-    CHECK_EQ(A==B, true);
-    ++A;
-    CHECK_EQ(A==C, true);
-    A--;
-    --A;
-    CHECK_EQ(A==D, true);
-}
-
-
-
 

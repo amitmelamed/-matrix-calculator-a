@@ -98,6 +98,10 @@ namespace zich {
      * @return
      */
     double Matrix::get(int i, int j) {
+        if(i<0||j<0||i>=rows||j>=cols){
+            throw std::invalid_argument("out of bounds");
+
+        }
         return this->matrix[(unsigned long) i][(unsigned long) j];
     }
 
@@ -439,12 +443,7 @@ namespace zich {
                 throw std::invalid_argument("invaild input");
             }
 
-            for (size_t j = 0; j < words[i].length(); ++j) {
-                if(words[i].at(j)>=zeroInDec && words[i].at(j)<=nineInDec){
-                    base.push_back((double )words[i].at(j)-zeroInDec);
-                    count++;
-                }
-            }
+
 
         }
 
