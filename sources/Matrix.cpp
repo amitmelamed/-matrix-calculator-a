@@ -5,12 +5,16 @@
 #include <iostream>
 #include <vector>
 
+
+int const zeroInDec=48;
+int const nineInDec=57;
+
 using namespace zich;
 
 /**
  * The zich namespace will contain the implementaion of the Matrix class declared in Matrix.hpp header file.
  */
-vector<string> split(string target, string delimiter)
+vector<string> split(string const & target, string const &delimiter)
 {
     vector<string> components;
     if (!target.empty())
@@ -414,7 +418,7 @@ namespace zich {
      * @return
      */
     istream& operator>>(istream& input, Matrix& a){
-        string s="";
+        string s;
         getline(input,s);
         vector<string> words= split(s,",");
         int count=0;
@@ -436,15 +440,14 @@ namespace zich {
             }
 
             for (size_t j = 0; j < words[i].length(); ++j) {
-                if(words[i].at(j)>=48 && words[i].at(j)<=57){
-                    base.push_back((double )words[i].at(j)-48);
+                if(words[i].at(j)>=zeroInDec && words[i].at(j)<=nineInDec){
+                    base.push_back((double )words[i].at(j)-zeroInDec);
                     count++;
                 }
             }
 
         }
-        Matrix b(base,count,words.size());
-        a=b;
+
         return input;
     }
     /**
