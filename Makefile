@@ -31,12 +31,8 @@ StudentTest1.cpp:  # Itzik
 StudentTest2.cpp:  # Itamar Almog
 	curl https://raw.githubusercontent.com/itamaralmog/matrix-calculator-a/main/Test.cpp > $@
 
-
-
 StudentTest3.cpp:  # Amit Melamed
 	curl https://raw.githubusercontent.com/amitmelamed/-matrix-calculator-a/main/Test.cpp > $@
-
-
 
 tidy:
 	clang-tidy $(SOURCES) $(TIDY_FLAGS) --
